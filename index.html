@@ -10,12 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts (Kantumruy Pro) -->
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Kantumruy Pro', sans-serif;
-            background-color: #f3f4f6;
-        }
-    </style>
+    <style>body { font-family: 'Kantumruy Pro', sans-serif; background-color: #f3f4f6; }</style>
 </head>
 <body class="text-gray-800">
 
@@ -26,23 +21,28 @@
                 <div class="w-8 h-8 bg-gradient-to-tr from-amber-600 to-orange-500 rounded-lg flex items-center justify-center text-white font-bold shadow">
                     <i class="fa-solid fa-shield-cat text-sm"></i>
                 </div>
-                <span id="navTitle" class="font-bold text-xs text-gray-700">Fox Mod Store</span>
+                <span class="font-bold text-xs text-gray-700">Fox Mod Store</span>
             </div>
             <div class="flex items-center space-x-2">
-                <div class="bg-gray-100 px-3 py-1 rounded-full flex items-center space-x-1.5 text-xs font-bold text-gray-800 border border-gray-200">
+                <!-- Wallet Balance Display -->
+                <div onclick="openWalletModal()" class="bg-gray-100 px-3 py-1 rounded-full flex items-center space-x-1.5 text-xs font-bold text-gray-800 border border-gray-200 cursor-pointer hover:bg-gray-200 transition">
                     <i class="fa-solid fa-wallet text-amber-500"></i>
-                    <span>$0.00</span>
+                    <span id="userWalletBalance">$0.00</span>
                 </div>
-                <!-- Admin Toggle Button -->
-                <button onclick="toggleAdminMode()" class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center hover:bg-blue-200" title="Admin Panel">
-                    <i class="fa-solid fa-gear text-xs"></i>
+                <!-- My Orders / Account Check Button -->
+                <button onclick="openMyAccountModal()" class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center hover:bg-blue-200 transition" title="ប្រវត្តិការទិញ និងអាខោនរបស់ខ្ញុំ">
+                    <i class="fa-solid fa-user text-xs"></i>
                 </button>
+                <!-- Admin Link -->
+                <a href="admin.html" class="w-8 h-8 bg-slate-100 rounded-full text-slate-700 flex items-center justify-center hover:bg-slate-200 transition" title="Admin Panel">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- ================= CUSTOMER STOREFRONT ================= -->
-    <main id="customerView" class="max-w-md mx-auto px-3 py-3 space-y-4">
+    <!-- Main Storefront Container -->
+    <main class="max-w-md mx-auto px-3 py-3 space-y-4">
 
         <!-- Banner / Hero Section -->
         <div class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white p-4 flex flex-col justify-between min-h-[140px]">
@@ -52,68 +52,40 @@
             <div class="z-10">
                 <span class="bg-orange-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">WELCOME TO</span>
                 <h2 class="text-lg font-black mt-0.5 tracking-wide">foxmod.site <span class="text-orange-400 font-normal">Happy New Year!</span></h2>
-                <p class="text-[11px] text-gray-300 mt-0.5">YOUR ULTIMATE DESTINATION FOR ALL PREMIUM LICENSE KEYS & DIGITAL SOLUTIONS.</p>
-            </div>
-            <div class="z-10 mt-3 flex items-center justify-between text-[11px] text-gray-300 border-t border-white/10 pt-2">
-                <span class="text-orange-300 font-medium">https://foxmod.site</span>
-                <span class="bg-blue-600 text-white px-2.5 py-0.5 rounded-full font-bold text-[10px]">SHOP NOW</span>
+                <p class="text-[11px] text-gray-300 mt-0.5">YOUR ULTIMATE DESTINATION FOR PREMIUM LICENSE KEYS & DIGITAL SOLUTIONS.</p>
             </div>
         </div>
 
         <!-- Featured Products Section -->
         <div>
             <div class="flex items-center justify-between mb-2 px-1">
-                <h3 class="font-bold text-sm text-gray-900">Featured Products</h3>
-                <span id="productCount" class="text-[11px] font-semibold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-md">4 items</span>
+                <h3 class="font-bold text-sm text-gray-900">Featured Products & Services</h3>
+                <span id="productCount" class="text-[11px] font-semibold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-md">items</span>
             </div>
 
-            <!-- Product Grid (Rendered dynamically) -->
+            <!-- Product Grid -->
             <div id="productGrid" class="grid grid-cols-2 gap-2.5">
-                <!-- Products will load here -->
+                <!-- Loaded dynamically from admin/localStorage -->
             </div>
         </div>
     </main>
 
-    <!-- ================= ADMIN PANEL ================= -->
-    <div id="adminView" class="max-w-md mx-auto px-3 py-4 space-y-4 hidden">
-        <div class="bg-slate-900 text-white p-4 rounded-xl shadow flex items-center justify-between">
-            <div>
-                <h2 class="font-bold text-sm">🛠️ Admin Control Panel</h2>
-                <p class="text-[10px] text-gray-400">គ្រប់គ្រងផលិតផល និងតម្លៃហាងរបស់អ្នក</p>
-            </div>
-            <button onclick="toggleAdminMode()" class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
-                <i class="fa-solid fa-arrow-left"></i> ចេញក្រៅ
-            </button>
-        </div>
-
-        <!-- Add New Product Form -->
-        <div class="bg-white p-4 rounded-xl shadow space-y-3">
-            <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមផលិតផលថ្មី</h3>
-            <div class="space-y-2 text-xs">
-                <input type="text" id="newTitle" placeholder="ឈ្មោះផលិតផល (ឧ: Netflix Premium)" class="w-full p-2 border rounded-lg">
-                <input type="number" id="newPrice" placeholder="តម្លៃ ($)" step="0.01" class="w-full p-2 border rounded-lg">
-                <input type="text" id="newImg" placeholder="Link រូបភាព (URL)" class="w-full p-2 border rounded-lg">
-                <button onclick="addNewProduct()" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg shadow">រក្សាទុកផលិតផល</button>
-            </div>
-        </div>
-
-        <!-- Existing Products List for Admin -->
-        <div class="bg-white p-4 rounded-xl shadow space-y-3">
-            <h3 class="font-bold text-xs text-gray-900 uppercase">📦 បញ្ជីផលិតផលក្នុងហាង</h3>
-            <div id="adminProductList" class="space-y-2">
-                <!-- Admin items loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- PRODUCT DETAIL MODAL -->
+    <!-- PRODUCT PURCHASE MODAL -->
     <div id="productModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
-        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[85vh]">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden flex flex-col">
             <div class="bg-gray-50 px-3 py-2.5 border-b flex items-center justify-between">
-                <h3 id="modalTitle" class="font-bold text-xs text-gray-900">Select Duration</h3>
+                <h3 id="modalTitle" class="font-bold text-xs text-gray-900">Select Service</h3>
                 <button onclick="closeProductModal()" class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
             </div>
             <div class="p-3.5 space-y-3">
+                <div class="space-y-1">
+                    <label class="text-[11px] font-bold text-gray-700">Promo Code (ប្រសិនបើมี):</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="inputPromo" placeholder="បញ្ចូលកូដបញ្ចុះតម្លៃ" class="w-full p-2 border rounded-lg text-xs uppercase outline-none focus:ring-1 focus:ring-blue-500">
+                        <button onclick="applyPromoCode()" class="bg-slate-800 text-white text-xs px-3 rounded-lg font-bold">Apply</button>
+                    </div>
+                    <p id="promoMsg" class="text-[10px] text-emerald-600 font-semibold"></p>
+                </div>
                 <div class="pt-2 border-t flex items-center justify-between">
                     <span class="text-[11px] font-bold text-gray-700">Total Amount:</span>
                     <span id="modalTotalAmount" class="text-base font-black text-blue-600">$2.50</span>
@@ -121,12 +93,12 @@
             </div>
             <div class="p-3 bg-gray-50 border-t flex items-center space-x-2">
                 <button onclick="closeProductModal()" class="w-1/2 bg-gray-200 text-gray-700 font-bold text-[11px] py-2 rounded-xl">Cancel</button>
-                <button onclick="proceedToCheckout()" class="w-1/2 bg-blue-600 text-white font-bold text-[11px] py-2 rounded-xl shadow">Pay Now</button>
+                <button onclick="proceedToCheckout()" class="w-1/2 bg-blue-600 text-white font-bold text-[11px] py-2 rounded-xl shadow">Pay with KHQR</button>
             </div>
         </div>
     </div>
 
-    <!-- KHQR PAYMENT MODAL (Account ID Hidden) -->
+    <!-- KHQR PAYMENT MODAL -->
     <div id="qrModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3">
         <div class="bg-white w-full max-w-xs rounded-2xl shadow-2xl p-5 text-center relative space-y-3">
             <button onclick="closeQrModal()" class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
@@ -135,56 +107,73 @@
                 <h3 class="font-bold text-xs text-gray-800 mt-1.5">Fox Mod Store</h3>
                 <p id="qrDisplayAmount" class="text-lg font-black text-blue-600 mt-0.5">$2.50 USD</p>
             </div>
-
             <div class="bg-white p-2 rounded-xl border border-red-400 inline-block shadow-inner">
-                <img id="bakongQrImg" src="" alt="KHQR Code" class="w-44 h-44 mx-auto rounded-md">
+                <img id="bakongQrImg" src="" alt="KHQR" class="w-44 h-44 mx-auto rounded-md">
             </div>
-
             <div class="text-[10px] text-gray-500">
                 <p class="font-medium text-gray-700">Scan to pay with any banking app</p>
             </div>
+            <button onclick="confirmOrderSuccess()" class="w-full bg-emerald-600 text-white font-bold text-[11px] py-2.5 rounded-xl shadow">I Have Paid / Done</button>
+        </div>
+    </div>
 
-            <button onclick="alert('សូមអរគុណ! ប្រព័ន្ធបានទទួលការទូទាត់របស់អ្នកហើយ។'); closeQrModal();" class="w-full bg-emerald-600 text-white font-bold text-[11px] py-2.5 rounded-xl shadow">
-                Place Order / Done
-            </button>
+    <!-- WALLET TOP-UP MODAL -->
+    <div id="walletModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden p-4 space-y-3">
+            <div class="flex items-center justify-between border-b pb-2">
+                <h3 class="font-bold text-xs text-gray-900">💵 ដាក់ប្រាក់ចូលកាបូប (Top-up Wallet)</h3>
+                <button onclick="closeWalletModal()" class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+            </div>
+            <p class="text-[11px] text-gray-600">បញ្ចូលអ៊ីមែល ឬលេខទូរសព្ទរបស់អ្នក រួចស្កេនបង់ប្រាក់ដើម្បីបន្ថែមទឹកប្រាក់ចូលកាបូប៖</p>
+            <div class="space-y-2 text-xs">
+                <input type="text" id="topupEmail" placeholder="ອີមែល ឬ លេខទូរសព្ទរបស់អ្នក" class="w-full p-2 border rounded-lg outline-none">
+                <input type="number" id="topupVal" placeholder="ចំនួនទឹកប្រាក់ ($)" step="0.01" class="w-full p-2 border rounded-lg outline-none">
+                <button onclick="requestWalletTopup()" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg shadow">បង្កើត QR ដាក់ប្រាក់</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MY ORDERS & ACCOUNT CHECKING MODAL -->
+    <div id="myAccountModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[85vh]">
+            <div class="bg-slate-900 text-white px-3 py-2.5 flex items-center justify-between">
+                <h3 class="font-bold text-xs">👤 ពិនិត្យអាខោន និងប្រវត្តិការទិញរបស់ខ្ញុំ</h3>
+                <button onclick="closeMyAccountModal()" class="w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
+            </div>
+            <div class="p-3.5 overflow-y-auto space-y-3 text-xs">
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-200 space-y-1">
+                    <p class="font-bold text-blue-900">សរុបប្រាក់ក្នុងកាបូប: <span id="modalWalletShow" class="text-emerald-600 font-black">$0.00</span></p>
+                </div>
+                <h4 class="font-bold text-gray-800">📦 ប្រវត្តិអាខោន និងសេវាកម្មដែលបានទិញរួច៖</h4>
+                <div id="myOrdersList" class="space-y-2">
+                    <!-- Orders loaded here -->
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Default Products List
-        let products = JSON.parse(localStorage.getItem('store_products')) || [
+        let defaultProducts = [
             { id: 1, name: "Snake Egine 2 8BP", price: 2.50, oldPrice: 55.00, tag: "HOT", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80" },
-            { id: 2, name: "Drip Client Non Root", price: 3.00, oldPrice: null, tag: "HOT", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" },
-            { id: 3, name: "E-sign K-sign Gbox certificate", price: 10.00, oldPrice: 15.00, tag: "HOT", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" },
-            { id: 4, name: "Telegram Premium", price: 13.50, oldPrice: null, tag: "PRO", img: "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=400&q=80" }
+            { id: 2, name: "Drip Client Non Root", price: 3.00, oldPrice: null, tag: "HOT", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" }
         ];
 
+        let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
+        let myBalance = parseFloat(localStorage.getItem('my_wallet_balance')) || 0.00;
+        let myOrders = JSON.parse(localStorage.getItem('my_store_orders')) || [];
+        
+        let currentProduct = null;
         let currentPrice = 2.50;
-        let isAdmin = window.location.search.includes('admin=true');
+        let discountAmount = 0;
 
         window.onload = function() {
             renderStore();
-            if (isAdmin) {
-                document.getElementById('adminView').classList.remove('hidden');
-                document.getElementById('customerView').classList.add('hidden');
-                renderAdminList();
-            }
+            updateWalletDisplay();
         }
 
-        function toggleAdminMode() {
-            isAdmin = !isAdmin;
-            if (isAdmin) {
-                window.history.pushState({}, '', '?admin=true');
-                document.getElementById('adminView').classList.remove('hidden');
-                document.getElementById('customerView').classList.add('hidden');
-                renderAdminList();
-            } else {
-                window.history.pushState({}, '', window.location.pathname);
-                document.getElementById('adminView').classList.add('hidden');
-                document.getElementById('customerView').classList.remove('hidden');
-                renderStore();
-            }
+        function updateWalletDisplay() {
+            document.getElementById('userWalletBalance').innerText = '$' + myBalance.toFixed(2);
         }
 
         function renderStore() {
@@ -197,90 +186,57 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
                         <div>
                             <div class="relative bg-gray-900 h-28 overflow-hidden">
-                                <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">${p.tag}</span>
-                                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover opacity-85">
+                                <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">${p.tag || 'HOT'}</span>
+                                <img src="${p.img}" class="w-full h-full object-cover opacity-85">
                             </div>
                             <div class="p-2.5">
                                 <h4 class="font-bold text-xs text-gray-900 leading-tight">${p.name}</h4>
                                 <div class="mt-1 flex items-baseline space-x-1">
                                     <span class="text-blue-600 font-bold text-sm">$${p.price.toFixed(2)}</span>
-                                    ${p.oldPrice ? `<span class="text-gray-400 text-[10px] line-through">$${p.oldPrice.toFixed(2)}</span>` : ''}
                                 </div>
-                                <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
-                                    <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> In Stock</span>
-                                    <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
+                                <div class="mt-2 text-[9px]">
+                                    <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200">In Stock</span>
                                 </div>
                             </div>
                         </div>
                         <div class="p-2.5 pt-0">
-                            <button onclick="openProductModal('${p.name}', ${p.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
-                                Buy Now
-                            </button>
+                            <button onclick='openProductModal(${JSON.stringify(p)})' class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm">Buy Now</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function renderAdminList() {
-            const list = document.getElementById('adminProductList');
-            list.innerHTML = '';
-            products.forEach((p, index) => {
-                list.innerHTML += `
-                    <div class="flex items-center justify-between p-2 border rounded-lg text-xs">
-                        <div class="flex items-center space-x-2">
-                            <img src="${p.img}" class="w-10 h-10 object-cover rounded">
-                            <div>
-                                <p class="font-bold">${p.name}</p>
-                                <p class="text-blue-600 font-semibold">$${p.price.toFixed(2)}</p>
-                            </div>
-                        </div>
-                        <button onclick="deleteProduct(${index})" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-md font-bold hover:bg-red-200"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
-
-        function addNewProduct() {
-            const title = document.getElementById('newTitle').value;
-            const price = parseFloat(document.getElementById('newPrice').value);
-            const img = document.getElementById('newImg').value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80';
-
-            if (!title || isNaN(price)) {
-                alert('សូមបំពេញឈ្មោះ និងតម្លៃផលិតផលឱ្យបានត្រឹមត្រូវ!');
-                return;
-            }
-
-            products.push({ id: Date.now(), name: title, price: price, oldPrice: null, tag: "HOT", img: img });
-            localStorage.setItem('store_products', JSON.stringify(products));
-            
-            document.getElementById('newTitle').value = '';
-            document.getElementById('newPrice').value = '';
-            document.getElementById('newImg').value = '';
-            
-            renderAdminList();
-            alert('បានបន្ថែមផលិតផលថ្មីដោយជោគជ័យ!');
-        }
-
-        function deleteProduct(index) {
-            if (confirm('តើคุณចង់លុបផលិតផលនេះមែនទេ?')) {
-                products.splice(index, 1);
-                localStorage.setItem('store_products', JSON.stringify(products));
-                renderAdminList();
-            }
-        }
-
-        function openProductModal(name, basePrice) {
-            currentPrice = basePrice;
-            document.getElementById('modalTitle').innerText = name;
-            document.getElementById('modalTotalAmount').innerText = '$' + basePrice.toFixed(2);
+        function openProductModal(product) {
+            currentProduct = product;
+            currentPrice = product.price;
+            discountAmount = 0;
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalTotalAmount').innerText = '$' + currentPrice.toFixed(2);
+            document.getElementById('inputPromo').value = '';
+            document.getElementById('promoMsg').innerText = '';
             document.getElementById('productModal').classList.remove('hidden');
         }
 
-        function closeProductModal() {
-            document.getElementById('productModal').classList.add('hidden');
+        function closeProductModal() { document.getElementById('productModal').classList.add('hidden'); }
+
+        function applyPromoCode() {
+            const code = document.getElementById('inputPromo').value.toUpperCase();
+            let discounts = JSON.parse(localStorage.getItem('store_discounts')) || [];
+            let found = discounts.find(d => d.code === code);
+
+            if (found) {
+                discountAmount = found.discount;
+                let finalPrice = Math.max(0, currentProduct.price - discountAmount);
+                currentPrice = finalPrice;
+                document.getElementById('modalTotalAmount').innerText = '$' + finalPrice.toFixed(2);
+                document.getElementById('promoMsg').innerText = `បានបញ្ចុះតម្លៃ -$${discountAmount.toFixed(2)}`;
+            } else {
+                alert('កូដបញ្ចុះតម្លៃមិនត្រឹមត្រូវ!');
+            }
         }
 
+        // KHQR Generator Algorithm
         function calculateCRC16(str) {
             let crc = 0xFFFF;
             for (let c = 0; c < str.length; c++) {
@@ -306,7 +262,6 @@
             let tag58 = "5802KH";
             let tag59 = "59" + String(storeName.length).padStart(2, '0') + storeName;
             let tag60 = "6007PhnomPenh";
-            
             let payload = tag00 + tag01 + tag38 + tag52 + tag53 + tag54 + tag58 + tag59 + tag60 + "6304";
             return payload + calculateCRC16(payload);
         }
@@ -314,16 +269,76 @@
         function proceedToCheckout() {
             closeProductModal();
             let khqrData = generateKHQR("samnang_mon@bkrt", currentPrice, "Fox Mod Store");
-            let qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=` + encodeURIComponent(khqrData);
-            
-            document.getElementById('bakongQrImg').src = qrApiUrl;
+            document.getElementById('bakongQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=` + encodeURIComponent(khqrData);
             document.getElementById('qrDisplayAmount').innerText = '$' + currentPrice.toFixed(2) + ' USD';
             document.getElementById('qrModal').classList.remove('hidden');
         }
 
-        function closeQrModal() {
-            document.getElementById('qrModal').classList.add('hidden');
+        function confirmOrderSuccess() {
+            // Save to user order history / account check
+            myOrders.push({
+                name: currentProduct.name,
+                price: currentPrice,
+                date: new Date().toLocaleString(),
+                accountDetails: "User_Key: " + Math.random().toString(36).substring(7).toUpperCase() + "-PRO"
+            });
+            localStorage.setItem('my_store_orders', JSON.stringify(myOrders));
+            
+            alert('ការទូទាត់ជោគជ័យ! អាខោន/សេវាកម្មរបស់អ្នកត្រូវបានបញ្ចេញជូន។');
+            closeQrModal();
         }
+
+        function closeQrModal() { document.getElementById('qrModal').classList.add('hidden'); }
+
+        // Wallet Top-up Functions
+        function openWalletModal() { document.getElementById('walletModal').classList.remove('hidden'); }
+        function closeWalletModal() { document.getElementById('walletModal').classList.add('hidden'); }
+
+        function requestWalletTopup() {
+            const email = document.getElementById('topupEmail').value;
+            const amt = parseFloat(document.getElementById('topupVal').value);
+
+            if (!email || isNaN(amt) || amt <= 0) {
+                alert('សូមបំពេញអ៊ីមែល និងទឹកប្រាក់ឱ្យបានត្រឹមត្រូវ!');
+                return;
+            }
+
+            // Simulate topup credit directly for demo convenience
+            myBalance += amt;
+            localStorage.setItem('my_wallet_balance', myBalance);
+            updateWalletDisplay();
+            closeWalletModal();
+            alert(`បានបន្ថែមប្រាក់ចំនួន $${amt.toFixed(2)} ចូលកាបូបរបស់អ្នកដោយជោគជ័យ!`);
+        }
+
+        // My Account & Checking Orders
+        function openMyAccountModal() {
+            document.getElementById('modalWalletShow').innerText = '$' + myBalance.toFixed(2);
+            const list = document.getElementById('myOrdersList');
+            list.innerHTML = '';
+
+            if (myOrders.length === 0) {
+                list.innerHTML = '<p class="text-gray-400 text-center py-2">មិនទាន់មានប្រវត្តិទិញទំនិញនៅឡើយទេ</p>';
+            } else {
+                myOrders.forEach(o => {
+                    list.innerHTML += `
+                        <div class="p-2.5 border rounded-lg bg-gray-50 space-y-1">
+                            <div class="flex justify-between font-bold text-gray-900">
+                                <span>🛒 ${o.name}</span>
+                                <span class="text-blue-600">$${o.price.toFixed(2)}</span>
+                            </div>
+                            <p class="text-[10px] text-gray-500">📅 ${o.date}</p>
+                            <div class="bg-emerald-50 p-1.5 rounded text-[11px] text-emerald-800 font-mono font-bold">
+                                🔑 ព័ត៌មានអាខោន: ${o.accountDetails}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('myAccountModal').classList.remove('hidden');
+        }
+
+        function closeMyAccountModal() { document.getElementById('myAccountModal').classList.add('hidden'); }
     </script>
 </body>
 </html>
