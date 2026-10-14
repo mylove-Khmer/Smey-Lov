@@ -20,11 +20,13 @@
                 <span class="font-bold text-xs text-gray-700">Fox Mod Store</span>
             </div>
             <div class="flex items-center space-x-2">
-                <div onclick="openWalletModal()" class="bg-gray-100 px-3 py-1 rounded-full flex items-center space-x-1.5 text-xs font-bold text-gray-800 border border-gray-200 cursor-pointer">
+                <!-- Wallet Balance Button / Login -->
+                <div onclick="openWalletModal()" class="bg-gray-100 px-3 py-1 rounded-full flex items-center space-x-1.5 text-xs font-bold text-gray-800 border border-gray-200 cursor-pointer hover:bg-gray-200">
                     <i class="fa-solid fa-wallet text-amber-500"></i>
                     <span id="userWalletBalance">$0.00</span>
                 </div>
-                <button onclick="openMyAccountModal()" class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center" title="ប្រវត្តិការទិញ & អាខោន">
+                <!-- My Orders & Accounts -->
+                <button onclick="openMyAccountModal()" class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center" title="អាខោនដែលបានទិញ">
                     <i class="fa-solid fa-user text-xs"></i>
                 </button>
                 <a href="admin.html" class="w-8 h-8 bg-slate-100 rounded-full text-slate-700 flex items-center justify-center" title="Admin">
@@ -65,32 +67,33 @@
                     <p class="text-gray-500">ស្តុកនៅសល់: <span class="font-bold text-emerald-600" id="modalStock">10</span> នាក់</p>
                 </div>
                 <div class="pt-2 border-t flex items-center justify-between">
-                    <span class="font-bold text-gray-700">តម្លៃសរុប:</span>
+                    <span class="font-bold text-gray-700">តម្លៃចុះ:</span>
                     <span id="modalPrice" class="text-lg font-black text-blue-600">$2.50</span>
                 </div>
             </div>
             <div class="p-3 bg-gray-50 border-t flex items-center space-x-2">
                 <button onclick="closeProductModal()" class="w-1/2 bg-gray-200 text-gray-700 font-bold text-xs py-2 rounded-xl">Cancel</button>
-                <button onclick="buyProduct()" class="w-1/2 bg-blue-600 text-white font-bold text-xs py-2 rounded-xl shadow">Buy Now / Pay</button>
+                <button onclick="buyProduct()" class="w-1/2 bg-blue-600 text-white font-bold text-xs py-2 rounded-xl shadow">Buy Now</button>
             </div>
         </div>
     </div>
 
-    <!-- WALLET MODAL -->
+    <!-- LOGIN / WALLET MODAL -->
     <div id="walletModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
         <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden p-4 space-y-3 text-xs">
             <div class="flex items-center justify-between border-b pb-2">
-                <h3 class="font-bold text-gray-900">👤 ចុះឈ្មោះ ឬ ឆែកប្រាក់ក្នុងកាបូប</h3>
+                <h3 class="font-bold text-gray-900">👤 ចូលគណនី / ឆែកកាបូបប្រាក់</h3>
                 <button onclick="closeWalletModal()" class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
             </div>
+            <p class="text-gray-500 text-[11px]">សូមបញ្ចូលអ៊ីមែល ឬលេខទូរសព្ទរបស់អ្នកដើម្បីពិនិត្យសមតុល្យប្រាក់៖</p>
             <div class="space-y-2">
-                <input type="text" id="userEmailInput" placeholder="បញ្ចូលអ៊ីមែល ឬ លេខទូរសព្ទរបស់អ្នក" class="w-full p-2.5 border rounded-lg outline-none">
+                <input type="text" id="userEmailInput" placeholder="អ៊ីមែល ឬ លេខទូរសព្ទ" class="w-full p-2.5 border rounded-lg outline-none">
                 <button onclick="loginUser()" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg shadow">ពិនិត្យកាបូបប្រាក់</button>
             </div>
         </div>
     </div>
 
-    <!-- MY ORDERS & ACCOUNT DETAILS MODAL -->
+    <!-- MY ACCOUNTS & PURCHASED PASSWORDS MODAL -->
     <div id="myAccountModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
         <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[85vh]">
             <div class="bg-slate-900 text-white px-3 py-2.5 flex items-center justify-between">
@@ -105,7 +108,7 @@
 
     <script>
         let products = JSON.parse(localStorage.getItem('store_products')) || [];
-        let currentUser = JSON.parse(localStorage.getItem('current_logged_user')) || { email: "guest@gmail.com", phone: "012345678", balance: 10.00 };
+        let currentUser = JSON.parse(localStorage.getItem('current_logged_user')) || { email: "guest@gmail.com", phone: "012345678", balance: 0.00 };
         let myOrders = JSON.parse(localStorage.getItem('my_store_orders')) || [];
         let selectedProduct = null;
 
@@ -133,7 +136,7 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
                         <div>
                             <div class="relative bg-gray-900 h-28 overflow-hidden">
-                                <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">${p.duration}</span>
+                                <span class="absolute top-2 left-2 z-10 bg-orange-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">${p.duration}</span>
                                 <img src="${p.img}" class="w-full h-full object-cover opacity-85">
                             </div>
                             <div class="p-2.5 space-y-1">
@@ -142,7 +145,7 @@
                                     <span class="text-blue-600 font-bold text-sm">$${p.salePrice.toFixed(2)}</span>
                                     <span class="text-gray-400 text-[10px] line-through">$${p.price.toFixed(2)}</span>
                                 </div>
-                                <p class="text-[10px] text-emerald-600 font-bold">ស្តុកនៅសល់: ${p.stock}</p>
+                                <p class="text-[10px] text-emerald-600 font-bold">ស្តុក: ${p.stock}</p>
                             </div>
                         </div>
                         <div class="p-2.5 pt-0">
@@ -164,26 +167,38 @@
             document.getElementById('productModal').classList.remove('hidden');
         }
 
-        function closeProductModal() { document.getElementById('productModal'].classList.add('hidden'); }
+        function closeProductModal() { document.getElementById('productModal').classList.add('hidden'); }
 
+        // មុខងារទិញទំនិញ (ទប់ស្កាត់បើគ្មានលុយក្នុងកាបូប)
         function buyProduct() {
             if(selectedProduct.stock <= 0) {
                 alert('ទំនិញនេះអស់ស្តុកហើយ!');
                 return;
             }
+
+            // ពិនិត្យមើលថាតើភ្ញៀវមានលុយគ្រប់គ្រាន់ ឬអត់?
             if(currentUser.balance < selectedProduct.salePrice) {
-                alert('ប្រាក់ក្នុងកាបូបរបស់អ្នកមិនគ្រប់គ្រាន់ទេ! សូមទំនាក់ទំនង Admin ដើម្បីដាក់ប្រាក់។');
+                alert('⚠️ មិនអាចទិញបានទេ! ប្រាក់ក្នុងកាបូបរបស់អ្នកមិនគ្រប់គ្រាន់ទេ ($' + currentUser.balance.toFixed(2) + ')។ សូមទំនាក់ទំនង Admin ដើម្បីដាក់ប្រាក់បន្ថែមសិន។');
                 return;
             }
 
-            // Deduct balance & stock
+            // កាត់លុយ និងកាត់ស្តុក
             currentUser.balance -= selectedProduct.salePrice;
             selectedProduct.stock -= 1;
 
+            // Update user balance in storage list
+            let users = JSON.parse(localStorage.getItem('store_users')) || [];
+            let uIndex = users.findIndex(u => u.email === currentUser.email);
+            if(uIndex !== -1) {
+                users[uIndex].balance = currentUser.balance;
+                localStorage.setItem('store_users', JSON.stringify(users));
+            }
+            localStorage.setItem('current_logged_user', JSON.stringify(currentUser));
             localStorage.setItem('store_products', JSON.stringify(products));
+
             updateWalletDisplay();
 
-            // Save order & account details (Email & Password)
+            // រក្សាទុកប្រវត្តិការទិញ និង Password
             myOrders.push({
                 name: selectedProduct.name,
                 duration: selectedProduct.duration,
@@ -194,7 +209,7 @@
             localStorage.setItem('my_store_orders', JSON.stringify(myOrders));
 
             closeProductModal();
-            alert('ទិញបានជោគជ័យ! សូមចូលទៅកាន់ប្រវត្តិអាខោនរបស់អ្នកដើម្បីយក Email & Password។');
+            alert('🎉 ទិញបានជោគជ័យ! សូមចូលទៅកាន់ផ្ទាំងប្រវត្តិអាខោនរបស់អ្នកដើម្បីយក Email & Password។');
             renderStore();
         }
 
@@ -211,12 +226,11 @@
             let found = users.find(u => u.email === input || u.phone === input);
             if(found) {
                 currentUser = found;
-                alert(`ស្វាគមន៍កុម្ម៉ង់ទិញ! ប្រាក់ក្នុងកាបូបរបស់អ្នក: $${currentUser.balance.toFixed(2)}`);
+                localStorage.setItem('current_logged_user', JSON.stringify(currentUser));
+                alert(`ស្វាគមន៍! ប្រាក់ក្នុងកាបូបរបស់អ្នក: $${currentUser.balance.toFixed(2)}`);
             } else {
-                currentUser = { email: input, phone: input, balance: 0.00 };
-                users.push(currentUser);
-                localStorage.setItem('store_users', JSON.stringify(users));
-                alert('បានបង្កើតគណនីកាបូបប្រាក់ថ្មី! (ទឹកប្រាក់ $0.00)');
+                alert('រកមិនឃើញគណនីនេះទេ! សូមឱ្យ Admin ដាក់ប្រាក់ចូលកាបូបរបស់អ្នកជាមុនសិន។');
+                return;
             }
             updateWalletDisplay();
             closeWalletModal();
@@ -244,6 +258,7 @@
                     `;
                 });
             }
+            document.getElementById('myAccountModal').classList.add('hidden'); // fix toggle
             document.getElementById('myAccountModal').classList.remove('hidden');
         }
 
