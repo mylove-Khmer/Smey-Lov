@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <!-- KHQR CUSTOM IMAGE MODAL -->
+    <!-- KHQR MODAL -->
     <div id="qrModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3">
         <div class="bg-white w-full max-w-xs rounded-2xl shadow-2xl p-5 text-center relative space-y-3">
             <button onclick="closeQrModal()" class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center"><i class="fa-solid fa-xmark text-[10px]"></i></button>
@@ -72,9 +72,9 @@
                 <p id="qrDisplayAmount" class="text-lg font-black text-blue-600 mt-0.5">$2.50 USD</p>
             </div>
             
-            <!-- Display Custom QR Uploaded by Admin -->
+            <!-- Display QR Image from GitHub -->
             <div class="bg-white p-2 rounded-xl border-2 border-red-500 inline-block shadow-inner">
-                <img id="customQrImg" src="" alt="Custom KHQR" class="w-48 h-48 mx-auto rounded-md object-contain">
+                <img id="githubQrImg" src="" alt="GitHub QR Code" class="w-48 h-48 mx-auto rounded-md object-contain">
             </div>
 
             <div class="text-[10px] text-gray-500">
@@ -85,8 +85,15 @@
     </div>
 
     <script>
+        // ត្រង់កន្លែង qrImg គឺដាក់ Link រូបភាព QR របស់អ្នកនៅលើ GitHub (Raw URL) តាមតម្លៃ ឬផលិតផលនីមួយៗ
         let defaultProducts = [
-            { id: 1, name: "Snake Egine 2 8BP", price: 2.50, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80", qrImg: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=sampleQR1" }
+            { 
+                id: 1, 
+                name: "Snake Egine 2 8BP", 
+                price: 2.50, 
+                img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80", 
+                qrImg: "https://raw.githubusercontent.com/mylove-Khmer/Smey-Lov/main/qr/qr-2.50.png" 
+            }
         ];
 
         let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
@@ -131,10 +138,10 @@
 
         function proceedToCheckout() {
             closeProductModal();
-            // បង្ហាញរូបភាព QR ផ្ទាល់ខ្លួនដែល Admin បាន Upload សម្រាប់ផលិតផល/តម្លៃនេះ
+            // ទាញយករូបភាព QR ពី GitHub មកបង្ហាញតាមផលិតផលដែលបានជ្រើសរើស
             document.getElementById('qrServiceName').innerText = selectedProduct.name;
             document.getElementById('qrDisplayAmount').innerText = '$' + selectedProduct.price.toFixed(2) + ' USD';
-            document.getElementById('customQrImg').src = selectedProduct.qrImg;
+            document.getElementById('githubQrImg').src = selectedProduct.qrImg;
             document.getElementById('qrModal').classList.remove('hidden');
         }
 
