@@ -26,24 +26,23 @@
                 <div class="w-8 h-8 bg-gradient-to-tr from-amber-600 to-orange-500 rounded-lg flex items-center justify-center text-white font-bold shadow">
                     <i class="fa-solid fa-shield-cat text-sm"></i>
                 </div>
+                <span id="navTitle" class="font-bold text-xs text-gray-700">Fox Mod Store</span>
             </div>
             <div class="flex items-center space-x-2">
                 <div class="bg-gray-100 px-3 py-1 rounded-full flex items-center space-x-1.5 text-xs font-bold text-gray-800 border border-gray-200">
                     <i class="fa-solid fa-wallet text-amber-500"></i>
                     <span>$0.00</span>
                 </div>
-                <button class="w-8 h-8 bg-gray-100 rounded-full text-gray-700 flex items-center justify-center hover:bg-gray-200">
-                    <i class="fa-regular fa-star text-xs"></i>
-                </button>
-                <button class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center hover:bg-blue-200">
-                    <i class="fa-solid fa-user text-xs"></i>
+                <!-- Admin Toggle Button -->
+                <button onclick="toggleAdminMode()" class="w-8 h-8 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center hover:bg-blue-200" title="Admin Panel">
+                    <i class="fa-solid fa-gear text-xs"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto px-3 py-3 space-y-4">
+    <!-- ================= CUSTOMER STOREFRONT ================= -->
+    <main id="customerView" class="max-w-md mx-auto px-3 py-3 space-y-4">
 
         <!-- Banner / Hero Section -->
         <div class="relative rounded-2xl overflow-hidden shadow-md bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white p-4 flex flex-col justify-between min-h-[140px]">
@@ -53,7 +52,7 @@
             <div class="z-10">
                 <span class="bg-orange-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">WELCOME TO</span>
                 <h2 class="text-lg font-black mt-0.5 tracking-wide">foxmod.site <span class="text-orange-400 font-normal">Happy New Year!</span></h2>
-                <p class="text-[11px] text-gray-300 mt-0.5">YOUR ULTIMATE DESTINATION FOR ALL PREMIUM LICENSE KEYS, GAME ENHANCEMENTS & DIGITAL COMMUNITY.</p>
+                <p class="text-[11px] text-gray-300 mt-0.5">YOUR ULTIMATE DESTINATION FOR ALL PREMIUM LICENSE KEYS & DIGITAL SOLUTIONS.</p>
             </div>
             <div class="z-10 mt-3 flex items-center justify-between text-[11px] text-gray-300 border-t border-white/10 pt-2">
                 <span class="text-orange-300 font-medium">https://foxmod.site</span>
@@ -65,117 +64,47 @@
         <div>
             <div class="flex items-center justify-between mb-2 px-1">
                 <h3 class="font-bold text-sm text-gray-900">Featured Products</h3>
-                <span class="text-[11px] font-semibold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-md">4 items</span>
+                <span id="productCount" class="text-[11px] font-semibold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-md">4 items</span>
             </div>
 
-            <!-- Product Grid -->
-            <div class="grid grid-cols-2 gap-2.5">
-                
-                <!-- Product 1 -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-gray-900 h-28 overflow-hidden">
-                            <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">HOT</span>
-                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80" alt="Snake Engine 2" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-2.5">
-                            <h4 class="font-bold text-xs text-gray-900 leading-tight">Snake Egine 2 8BP</h4>
-                            <div class="mt-1 flex items-baseline space-x-1">
-                                <span class="text-blue-600 font-bold text-sm">$2.50</span>
-                                <span class="text-gray-400 text-[10px] line-through">$55.00</span>
-                            </div>
-                            <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
-                                <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> In Stock</span>
-                                <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2.5 pt-0">
-                        <button onclick="openProductModal('Snake Egine 2 8BP', 2.50)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-gray-900 h-28 overflow-hidden">
-                            <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">HOT</span>
-                            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" alt="Drip Client" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-2.5">
-                            <h4 class="font-bold text-xs text-gray-900 leading-tight">Drip Client Non Root</h4>
-                            <div class="mt-1 flex items-baseline space-x-1">
-                                <span class="text-blue-600 font-bold text-sm">$3.00</span>
-                            </div>
-                            <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
-                                <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> In Stock</span>
-                                <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2.5 pt-0">
-                        <button onclick="openProductModal('Drip Client Non Root', 3.00)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-gray-900 h-28 overflow-hidden">
-                            <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">HOT</span>
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" alt="Certificate" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-2.5">
-                            <h4 class="font-bold text-xs text-gray-900 leading-tight">E-sign K-sign Gbox certificate</h4>
-                            <div class="mt-1 flex items-baseline space-x-1">
-                                <span class="text-blue-600 font-bold text-sm">$10.00</span>
-                                <span class="text-gray-400 text-[10px] line-through">$15.00</span>
-                            </div>
-                            <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
-                                <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> In Stock</span>
-                                <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2.5 pt-0">
-                        <button onclick="openProductModal('E-sign K-sign Gbox certificate', 10.00)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-gray-900 h-28 overflow-hidden">
-                            <span class="absolute top-2 left-2 z-10 bg-orange-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">PRO</span>
-                            <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=400&q=80" alt="Telegram Premium" class="w-full h-full object-cover opacity-85 hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-2.5">
-                            <h4 class="font-bold text-xs text-gray-900 leading-tight">Telegram Premium</h4>
-                            <div class="mt-1 flex items-baseline space-x-1">
-                                <span class="text-blue-600 font-bold text-sm">$13.50</span>
-                            </div>
-                            <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
-                                <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> Available</span>
-                                <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2.5 pt-0">
-                        <button onclick="openProductModal('Telegram Premium', 13.50)" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
-                            Buy Now
-                        </button>
-                    </div>
-                </div>
-
+            <!-- Product Grid (Rendered dynamically) -->
+            <div id="productGrid" class="grid grid-cols-2 gap-2.5">
+                <!-- Products will load here -->
             </div>
         </div>
     </main>
+
+    <!-- ================= ADMIN PANEL ================= -->
+    <div id="adminView" class="max-w-md mx-auto px-3 py-4 space-y-4 hidden">
+        <div class="bg-slate-900 text-white p-4 rounded-xl shadow flex items-center justify-between">
+            <div>
+                <h2 class="font-bold text-sm">🛠️ Admin Control Panel</h2>
+                <p class="text-[10px] text-gray-400">គ្រប់គ្រងផលិតផល និងតម្លៃហាងរបស់អ្នក</p>
+            </div>
+            <button onclick="toggleAdminMode()" class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+                <i class="fa-solid fa-arrow-left"></i> ចេញក្រៅ
+            </button>
+        </div>
+
+        <!-- Add New Product Form -->
+        <div class="bg-white p-4 rounded-xl shadow space-y-3">
+            <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមផលិតផលថ្មី</h3>
+            <div class="space-y-2 text-xs">
+                <input type="text" id="newTitle" placeholder="ឈ្មោះផលិតផល (ឧ: Netflix Premium)" class="w-full p-2 border rounded-lg">
+                <input type="number" id="newPrice" placeholder="តម្លៃ ($)" step="0.01" class="w-full p-2 border rounded-lg">
+                <input type="text" id="newImg" placeholder="Link រូបភាព (URL)" class="w-full p-2 border rounded-lg">
+                <button onclick="addNewProduct()" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-lg shadow">រក្សាទុកផលិតផល</button>
+            </div>
+        </div>
+
+        <!-- Existing Products List for Admin -->
+        <div class="bg-white p-4 rounded-xl shadow space-y-3">
+            <h3 class="font-bold text-xs text-gray-900 uppercase">📦 បញ្ជីផលិតផលក្នុងហាង</h3>
+            <div id="adminProductList" class="space-y-2">
+                <!-- Admin items loaded here -->
+            </div>
+        </div>
+    </div>
 
     <!-- PRODUCT DETAIL MODAL -->
     <div id="productModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3">
@@ -207,7 +136,6 @@
                 <p id="qrDisplayAmount" class="text-lg font-black text-blue-600 mt-0.5">$2.50 USD</p>
             </div>
 
-            <!-- QR Code container -->
             <div class="bg-white p-2 rounded-xl border border-red-400 inline-block shadow-inner">
                 <img id="bakongQrImg" src="" alt="KHQR Code" class="w-44 h-44 mx-auto rounded-md">
             </div>
@@ -222,9 +150,125 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript Application Logic -->
     <script>
+        // Default Products List
+        let products = JSON.parse(localStorage.getItem('store_products')) || [
+            { id: 1, name: "Snake Egine 2 8BP", price: 2.50, oldPrice: 55.00, tag: "HOT", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80" },
+            { id: 2, name: "Drip Client Non Root", price: 3.00, oldPrice: null, tag: "HOT", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" },
+            { id: 3, name: "E-sign K-sign Gbox certificate", price: 10.00, oldPrice: 15.00, tag: "HOT", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" },
+            { id: 4, name: "Telegram Premium", price: 13.50, oldPrice: null, tag: "PRO", img: "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=400&q=80" }
+        ];
+
         let currentPrice = 2.50;
+        let isAdmin = window.location.search.includes('admin=true');
+
+        window.onload = function() {
+            renderStore();
+            if (isAdmin) {
+                document.getElementById('adminView').classList.remove('hidden');
+                document.getElementById('customerView').classList.add('hidden');
+                renderAdminList();
+            }
+        }
+
+        function toggleAdminMode() {
+            isAdmin = !isAdmin;
+            if (isAdmin) {
+                window.history.pushState({}, '', '?admin=true');
+                document.getElementById('adminView').classList.remove('hidden');
+                document.getElementById('customerView').classList.add('hidden');
+                renderAdminList();
+            } else {
+                window.history.pushState({}, '', window.location.pathname);
+                document.getElementById('adminView').classList.add('hidden');
+                document.getElementById('customerView').classList.remove('hidden');
+                renderStore();
+            }
+        }
+
+        function renderStore() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            document.getElementById('productCount').innerText = products.length + ' items';
+
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <div class="relative bg-gray-900 h-28 overflow-hidden">
+                                <span class="absolute top-2 left-2 z-10 bg-red-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase">${p.tag}</span>
+                                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover opacity-85">
+                            </div>
+                            <div class="p-2.5">
+                                <h4 class="font-bold text-xs text-gray-900 leading-tight">${p.name}</h4>
+                                <div class="mt-1 flex items-baseline space-x-1">
+                                    <span class="text-blue-600 font-bold text-sm">$${p.price.toFixed(2)}</span>
+                                    ${p.oldPrice ? `<span class="text-gray-400 text-[10px] line-through">$${p.oldPrice.toFixed(2)}</span>` : ''}
+                                </div>
+                                <div class="mt-2 flex items-center space-x-1.5 text-[9px]">
+                                    <span class="bg-green-50 text-green-700 font-bold px-1.5 py-0.5 rounded border border-green-200"><i class="fa-solid fa-check text-[8px]"></i> In Stock</span>
+                                    <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-200"><i class="fa-solid fa-bolt text-[8px]"></i> Instant</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-2.5 pt-0">
+                            <button onclick="openProductModal('${p.name}', ${p.price})" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold py-2 rounded-lg shadow-sm transition text-center">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('adminProductList');
+            list.innerHTML = '';
+            products.forEach((p, index) => {
+                list.innerHTML += `
+                    <div class="flex items-center justify-between p-2 border rounded-lg text-xs">
+                        <div class="flex items-center space-x-2">
+                            <img src="${p.img}" class="w-10 h-10 object-cover rounded">
+                            <div>
+                                <p class="font-bold">${p.name}</p>
+                                <p class="text-blue-600 font-semibold">$${p.price.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <button onclick="deleteProduct(${index})" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-md font-bold hover:bg-red-200"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewProduct() {
+            const title = document.getElementById('newTitle').value;
+            const price = parseFloat(document.getElementById('newPrice').value);
+            const img = document.getElementById('newImg').value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80';
+
+            if (!title || isNaN(price)) {
+                alert('សូមបំពេញឈ្មោះ និងតម្លៃផលិតផលឱ្យបានត្រឹមត្រូវ!');
+                return;
+            }
+
+            products.push({ id: Date.now(), name: title, price: price, oldPrice: null, tag: "HOT", img: img });
+            localStorage.setItem('store_products', JSON.stringify(products));
+            
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newPrice').value = '';
+            document.getElementById('newImg').value = '';
+            
+            renderAdminList();
+            alert('បានបន្ថែមផលិតផលថ្មីដោយជោគជ័យ!');
+        }
+
+        function deleteProduct(index) {
+            if (confirm('តើคุณចង់លុបផលិតផលនេះមែនទេ?')) {
+                products.splice(index, 1);
+                localStorage.setItem('store_products', JSON.stringify(products));
+                renderAdminList();
+            }
+        }
 
         function openProductModal(name, basePrice) {
             currentPrice = basePrice;
@@ -269,7 +313,6 @@
 
         function proceedToCheckout() {
             closeProductModal();
-            
             let khqrData = generateKHQR("samnang_mon@bkrt", currentPrice, "Fox Mod Store");
             let qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=` + encodeURIComponent(khqrData);
             
