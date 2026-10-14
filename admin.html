@@ -12,117 +12,51 @@
 <body class="text-gray-800">
     <div class="max-w-lg mx-auto px-3 py-4 space-y-4">
         
-        <!-- Header -->
         <div class="bg-slate-900 text-white p-4 rounded-xl shadow flex items-center justify-between">
             <div>
                 <h2 class="font-bold text-sm">🛠️ Admin Control Panel</h2>
-                <p class="text-[10px] text-gray-400">គ្រប់គ្រងហាង សេវាកម្ម និងអតិថិជន</p>
+                <p class="text-[10px] text-gray-400">គ្រប់គ្រងសេវាកម្ម និងរូបភាព QR ផ្ទាល់ខ្លួន</p>
             </div>
-            <a href="index.html" class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-700 transition">
+            <a href="index.html" class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-700">
                 <i class="fa-solid fa-arrow-left"></i> ត្រឡប់ទៅហាង
             </a>
         </div>
 
-        <!-- TAB NAVIGATION -->
-        <div class="flex space-x-1 bg-white p-1 rounded-xl shadow-sm text-xs font-bold text-center">
-            <button onclick="switchTab('services')" id="tabBtnServices" class="flex-1 py-2 rounded-lg bg-blue-600 text-white transition">សេវាកម្ម & រូបភាព</button>
-            <button onclick="switchTab('users')" id="tabBtnUsers" class="flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">អ្នកប្រើប្រាស់ & ដាក់លុយ</button>
-            <button onclick="switchTab('discounts')" id="tabBtnDiscounts" class="flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">កូដបញ្ចុះតម្លៃ</button>
-        </div>
-
-        <!-- ================= SECTION 1: SERVICES & UPLOAD IMAGES ================= -->
-        <div id="sectionServices" class="space-y-4">
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមសេវាកម្ម និង Upload រូបភាព</h3>
-                <div class="space-y-2 text-xs">
-                    <input type="text" id="serviceName" placeholder="ឈ្មោះសេវាកម្ម (ឧ: Telegram Premium)" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <input type="number" id="servicePrice" placeholder="តម្លៃសេវាកម្ម ($)" step="0.01" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    
-                    <!-- File Upload Input instead of URL Link -->
-                    <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-gray-600">ជ្រើសរើសរូបភាពពីក្នុងម៉ាស៊ីន:</label>
-                        <input type="file" id="serviceImgFile" accept="image/*" class="w-full p-2 border rounded-lg text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    </div>
-
-                    <button onclick="addService()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg shadow transition">រក្សាទុកសេវាកម្ម</button>
+        <!-- Add Service & Custom QR Form -->
+        <div class="bg-white p-4 rounded-xl shadow space-y-3">
+            <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមសេវាកម្ម និង Upload រូបភាព QR ផ្ទាល់ខ្លួន</h3>
+            <div class="space-y-2 text-xs">
+                <input type="text" id="serviceName" placeholder="ឈ្មោះសេវាកម្ម (ឧ: Telegram Premium)" class="w-full p-2.5 border rounded-lg outline-none">
+                <input type="number" id="servicePrice" placeholder="តម្លៃសេវាកម្ម ($) ឧ: 2.50" step="0.01" class="w-full p-2.5 border rounded-lg outline-none">
+                
+                <!-- Product Image Upload -->
+                <div class="space-y-1">
+                    <label class="font-bold text-gray-600">🖼️ រូបភាពសេវាកម្ម:</label>
+                    <input type="file" id="serviceImgFile" accept="image/*" class="w-full p-2 border rounded-lg bg-gray-50 text-xs">
                 </div>
-            </div>
 
-            <!-- Service List -->
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">📦 បញ្ជីសេវាកម្មទាំងអស់ក្នុងហាង</h3>
-                <div id="adminServiceList" class="space-y-2"></div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION 2: USERS & TOP-UP ================= -->
-        <div id="sectionUsers" class="space-y-4 hidden">
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">💵 ដាក់ប្រាក់ចូលកាបូបភ្ញៀវ (Top-up)</h3>
-                <div class="space-y-2 text-xs">
-                    <input type="text" id="topupEmail" placeholder="អ៊ីមែល ឬ លេខទូរសព្ទអតិថិជន" class="w-full p-2.5 border rounded-lg outline-none">
-                    <input type="number" id="topupAmount" placeholder="ចំនួនទឹកប្រាក់ ($)" step="0.01" class="w-full p-2.5 border rounded-lg outline-none">
-                    <button onclick="topupUserBalance()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg shadow transition">បញ្ជាក់ការដាក់ប្រាក់</button>
+                <!-- Custom QR Code Image Upload for this service/price -->
+                <div class="space-y-1">
+                    <label class="font-bold text-red-600">📷 Upload រូបភាព KHQR សម្រាប់តម្លៃនេះ:</label>
+                    <input type="file" id="serviceQrFile" accept="image/*" class="w-full p-2 border rounded-lg bg-red-50 text-xs">
                 </div>
-            </div>
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">👥 បញ្ជីអ្នកប្រើប្រាស់</h3>
-                <div id="adminUserList" class="space-y-2"></div>
+
+                <button onclick="addService()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg shadow">រក្សាទុកសេវាកម្ម & QR</button>
             </div>
         </div>
 
-        <!-- ================= SECTION 3: DISCOUNTS ================= -->
-        <div id="sectionDiscounts" class="space-y-4 hidden">
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">🏷️ បង្កើតកូដបញ្ចុះតម្លៃ</h3>
-                <div class="space-y-2 text-xs">
-                    <input type="text" id="promoCode" placeholder="កូដបញ្ចុះតម្លៃ (ឧ: SALE50)" class="w-full p-2.5 border rounded-lg uppercase outline-none">
-                    <input type="number" id="promoDiscount" placeholder="ទឹកប្រាក់បញ្ចុះ ($)" step="0.01" class="w-full p-2.5 border rounded-lg outline-none">
-                    <button onclick="addPromoCode()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-lg shadow transition">បង្កើតកូដ</button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">🎫 កូដបញ្ចុះតម្លៃសកម្ម</h3>
-                <div id="adminPromoList" class="space-y-2"></div>
-            </div>
+        <!-- Service List -->
+        <div class="bg-white p-4 rounded-xl shadow space-y-3">
+            <h3 class="font-bold text-xs text-gray-900 uppercase">📦 បញ្ជីសេវាកម្ម និង QR ក្នុងហាង</h3>
+            <div id="adminServiceList" class="space-y-2"></div>
         </div>
-
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
         let services = JSON.parse(localStorage.getItem('store_products')) || [];
-        let users = JSON.parse(localStorage.getItem('store_users')) || [];
-        let discounts = JSON.parse(localStorage.getItem('store_discounts')) || [];
 
-        window.onload = function() {
-            renderServices();
-            renderUsers();
-            renderDiscounts();
-        }
+        window.onload = function() { renderServices(); }
 
-        function switchTab(tab) {
-            document.getElementById('sectionServices').classList.add('hidden');
-            document.getElementById('sectionUsers').classList.add('hidden');
-            document.getElementById('sectionDiscounts').classList.add('hidden');
-            
-            document.getElementById('tabBtnServices').className = "flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition";
-            document.getElementById('tabBtnUsers').className = "flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition";
-            document.getElementById('tabBtnDiscounts').className = "flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition";
-
-            if (tab === 'services') {
-                document.getElementById('sectionServices').classList.remove('hidden');
-                document.getElementById('tabBtnServices').className = "flex-1 py-2 rounded-lg bg-blue-600 text-white transition";
-            } else if (tab === 'users') {
-                document.getElementById('sectionUsers').classList.remove('hidden');
-                document.getElementById('tabBtnUsers').className = "flex-1 py-2 rounded-lg bg-blue-600 text-white transition";
-            } else if (tab === 'discounts') {
-                document.getElementById('sectionDiscounts').classList.remove('hidden');
-                document.getElementById('tabBtnDiscounts').className = "flex-1 py-2 rounded-lg bg-blue-600 text-white transition";
-            }
-        }
-
-        // Services & Image Upload (FileReader)
         function renderServices() {
             const list = document.getElementById('adminServiceList');
             list.innerHTML = '';
@@ -130,13 +64,16 @@
                 list.innerHTML += `
                     <div class="flex items-center justify-between p-2.5 border rounded-lg text-xs bg-gray-50">
                         <div class="flex items-center space-x-3">
-                            <img src="${s.img}" class="w-10 h-10 object-cover rounded-md border">
+                            <img src="${s.img}" class="w-10 h-10 object-cover rounded border">
                             <div>
                                 <p class="font-bold text-gray-900">${s.name}</p>
                                 <p class="text-blue-600 font-semibold">$${s.price.toFixed(2)}</p>
                             </div>
                         </div>
-                        <button onclick="deleteService(${index})" class="bg-red-100 text-red-600 px-3 py-1.5 rounded-md font-bold hover:bg-red-200"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] bg-red-100 text-red-700 px-2 py-1 rounded font-bold">មាន QR រួចរាល់</span>
+                            <button onclick="deleteService(${index})" class="bg-red-100 text-red-600 px-2.5 py-1 rounded font-bold"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                 `;
             });
@@ -145,116 +82,45 @@
         function addService() {
             const name = document.getElementById('serviceName').value;
             const price = parseFloat(document.getElementById('servicePrice').value);
-            const fileInput = document.getElementById('serviceImgFile');
+            const imgFile = document.getElementById('serviceImgFile').files[0];
+            const qrFile = document.getElementById('serviceQrFile').files[0];
 
-            if (!name || isNaN(price) || fileInput.files.length === 0) {
-                alert('សូមបំពេញឈ្មោះសេវាកម្ម តម្លៃ និងជ្រើសរើសរូបភាពពីក្នុងម៉ាស៊ីនឱ្យបានត្រឹមត្រូវ!');
+            if (!name || isNaN(price) || !imgFile || !qrFile) {
+                alert('សូមបំពេញព័ត៌មាន និង Upload រូបភាពផលិតផលព្រមទាំងរូបភាព QR ឱ្យបានครบถ้วน!');
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Image = e.target.result; // แปลงรูปเป็น Base64
-                
-                services.push({ id: Date.now(), name: name, price: price, oldPrice: null, tag: "HOT", img: base64Image });
-                localStorage.setItem('store_products', JSON.stringify(services));
-                
-                document.getElementById('serviceName').value = '';
-                document.getElementById('servicePrice').value = '';
-                fileInput.value = '';
-                renderServices();
-                alert('បានបន្ថែមសេវាកម្ម និង Upload រូបភាពដោយជោគជ័យ!');
+            const reader1 = new FileReader();
+            reader1.onload = function(e1) {
+                const imgBase64 = e1.target.result;
+
+                const reader2 = new FileReader();
+                reader2.onload = function(e2) {
+                    const qrBase64 = e2.target.result;
+
+                    services.push({
+                        id: Date.now(),
+                        name: name,
+                        price: price,
+                        img: imgBase64,
+                        qrImg: qrBase64 // រូបភាព QR ផ្ទាល់ខ្លួនតាមតម្លៃ
+                    });
+
+                    localStorage.setItem('store_products', JSON.stringify(services));
+                    alert('បានបន្ថែមសេវាកម្ម និង QR Code ដោយជោគជ័យ!');
+                    location.reload();
+                };
+                reader2.readAsDataURL(qrFile);
             };
-            reader.readAsDataURL(fileInput.files[0]);
+            reader1.readAsDataURL(imgFile);
         }
 
         function deleteService(index) {
-            if (confirm('តើអ្នកចង់លុបសេវាកម្មនេះមែនទេ?')) {
+            if (confirm('តើអ្នកចង់លុបមែនទេ?')) {
                 services.splice(index, 1);
                 localStorage.setItem('store_products', JSON.stringify(services));
                 renderServices();
             }
-        }
-
-        // Users & Balance
-        function renderUsers() {
-            const list = document.getElementById('adminUserList');
-            list.innerHTML = '';
-            users.forEach(u => {
-                list.innerHTML += `
-                    <div class="p-2.5 border rounded-lg text-xs bg-gray-50 space-y-1">
-                        <div class="flex justify-between font-bold text-gray-900">
-                            <span>📧 ${u.email}</span>
-                            <span class="text-emerald-600">$${u.balance.toFixed(2)}</span>
-                        </div>
-                        <p class="text-gray-500 text-[11px]">📱 លេខទូរសព្ទ: ${u.phone}</p>
-                    </div>
-                `;
-            });
-        }
-
-        function topupUserBalance() {
-            const emailInput = document.getElementById('topupEmail').value.trim();
-            const amount = parseFloat(document.getElementById('topupAmount').value);
-
-            if (!emailInput || isNaN(amount) || amount <= 0) {
-                alert('សូមបំពេញអ៊ីមែល/លេខទូរសព្ទ និងចំនួនទឹកប្រាក់ឱ្យត្រឹមត្រូវ!');
-                return;
-            }
-
-            let user = users.find(u => u.email === emailInput || u.phone === emailInput);
-            if (!user) {
-                user = { id: Date.now(), email: emailInput, phone: "N/A", balance: amount };
-                users.push(user);
-            } else {
-                user.balance += amount;
-            }
-
-            localStorage.setItem('store_users', JSON.stringify(users));
-            renderUsers();
-            document.getElementById('topupEmail').value = '';
-            document.getElementById('topupAmount').value = '';
-            alert(`បានបញ្ចូលប្រាក់ចំនួន $${amount.toFixed(2)} ជោគជ័យ!`);
-        }
-
-        // Discounts
-        function renderDiscounts() {
-            const list = document.getElementById('adminPromoList');
-            list.innerHTML = '';
-            discounts.forEach((d, index) => {
-                list.innerHTML += `
-                    <div class="flex items-center justify-between p-2.5 border rounded-lg text-xs bg-gray-50">
-                        <div>
-                            <span class="font-bold text-purple-700">🏷️ ${d.code}</span>
-                            <span class="ml-2 text-gray-500">ลด: $${d.discount.toFixed(2)}</span>
-                        </div>
-                        <button onclick="deleteDiscount(${index})" class="bg-red-100 text-red-600 px-2.5 py-1 rounded font-bold"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
-
-        function addPromoCode() {
-            const code = document.getElementById('promoCode').value.toUpperCase();
-            const discount = parseFloat(document.getElementById('promoDiscount').value);
-
-            if (!code || isNaN(discount)) {
-                alert('សូមបំពេញកូដ និងទឹកប្រាក់បញ្ចុះតម្លៃ!');
-                return;
-            }
-
-            discounts.push({ code: code, discount: discount });
-            localStorage.setItem('store_discounts', JSON.stringify(discounts));
-            document.getElementById('promoCode').value = '';
-            document.getElementById('promoDiscount').value = '';
-            renderDiscounts();
-            alert('បង្កើតកូដបញ្ចុះតម្លៃជោគជ័យ!');
-        }
-
-        function deleteDiscount(index) {
-            discounts.splice(index, 1);
-            localStorage.setItem('store_discounts', JSON.stringify(discounts));
-            renderDiscounts();
         }
     </script>
 </body>
