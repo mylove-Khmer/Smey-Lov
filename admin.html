@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Fox Mod Store</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Kantumruy Pro) -->
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kantumruy Pro', sans-serif; background-color: #f3f4f6; }</style>
 </head>
@@ -33,15 +30,20 @@
             <button onclick="switchTab('discounts')" id="tabBtnDiscounts" class="flex-1 py-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">កូដបញ្ចុះតម្លៃ</button>
         </div>
 
-        <!-- ================= SECTION 1: SERVICES & PRODUCTS ================= -->
+        <!-- ================= SECTION 1: SERVICES & UPLOAD IMAGES ================= -->
         <div id="sectionServices" class="space-y-4">
-            <!-- Add Service Form with Image URL Input -->
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមសេវាកម្ម / ផលិតផលថ្មី</h3>
+                <h3 class="font-bold text-xs text-gray-900 uppercase">➕ បន្ថែមសេវាកម្ម និង Upload រូបភាព</h3>
                 <div class="space-y-2 text-xs">
                     <input type="text" id="serviceName" placeholder="ឈ្មោះសេវាកម្ម (ឧ: Telegram Premium)" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                     <input type="number" id="servicePrice" placeholder="តម្លៃសេវាកម្ម ($)" step="0.01" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <input type="text" id="serviceImg" placeholder="Link រូបភាពសេវាកម្ម (ឧ: https://example.com/image.jpg)" class="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    
+                    <!-- File Upload Input instead of URL Link -->
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-gray-600">ជ្រើសរើសរូបភាពពីក្នុងម៉ាស៊ីន:</label>
+                        <input type="file" id="serviceImgFile" accept="image/*" class="w-full p-2 border rounded-lg text-xs bg-gray-50 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+
                     <button onclick="addService()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg shadow transition">រក្សាទុកសេវាកម្ម</button>
                 </div>
             </div>
@@ -49,15 +51,12 @@
             <!-- Service List -->
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
                 <h3 class="font-bold text-xs text-gray-900 uppercase">📦 បញ្ជីសេវាកម្មទាំងអស់ក្នុងហាង</h3>
-                <div id="adminServiceList" class="space-y-2">
-                    <!-- Loaded dynamically -->
-                </div>
+                <div id="adminServiceList" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- ================= SECTION 2: USERS & TOP-UP BALANCE ================= -->
+        <!-- ================= SECTION 2: USERS & TOP-UP ================= -->
         <div id="sectionUsers" class="space-y-4 hidden">
-            <!-- Topup Balance Form -->
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
                 <h3 class="font-bold text-xs text-gray-900 uppercase">💵 ដាក់ប្រាក់ចូលកាបូបភ្ញៀវ (Top-up)</h3>
                 <div class="space-y-2 text-xs">
@@ -66,27 +65,22 @@
                     <button onclick="topupUserBalance()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg shadow transition">បញ្ជាក់ការដាក់ប្រាក់</button>
                 </div>
             </div>
-
-            <!-- User List -->
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">👥 បញ្ជីអ្នកប្រើប្រាស់ (Email & Phone)</h3>
-                <div id="adminUserList" class="space-y-2">
-                    <!-- Loaded dynamically -->
-                </div>
+                <h3 class="font-bold text-xs text-gray-900 uppercase">👥 បញ្ជីអ្នកប្រើប្រាស់</h3>
+                <div id="adminUserList" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- ================= SECTION 3: DISCOUNT / PROMO CODES ================= -->
+        <!-- ================= SECTION 3: DISCOUNTS ================= -->
         <div id="sectionDiscounts" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-xs text-gray-900 uppercase">🏷️ បង្កើតកូដបញ្ចុះតម្លៃ (Discount Code)</h3>
+                <h3 class="font-bold text-xs text-gray-900 uppercase">🏷️ បង្កើតកូដបញ្ចុះតម្លៃ</h3>
                 <div class="space-y-2 text-xs">
                     <input type="text" id="promoCode" placeholder="កូដបញ្ចុះតម្លៃ (ឧ: SALE50)" class="w-full p-2.5 border rounded-lg uppercase outline-none">
                     <input type="number" id="promoDiscount" placeholder="ទឹកប្រាក់បញ្ចុះ ($)" step="0.01" class="w-full p-2.5 border rounded-lg outline-none">
                     <button onclick="addPromoCode()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-lg shadow transition">បង្កើតកូដ</button>
                 </div>
             </div>
-
             <div class="bg-white p-4 rounded-xl shadow space-y-3">
                 <h3 class="font-bold text-xs text-gray-900 uppercase">🎫 កូដបញ្ចុះតម្លៃសកម្ម</h3>
                 <div id="adminPromoList" class="space-y-2"></div>
@@ -97,18 +91,9 @@
 
     <!-- JavaScript Logic -->
     <script>
-        let services = JSON.parse(localStorage.getItem('store_products')) || [
-            { id: 1, name: "Snake Egine 2 8BP", price: 2.50, oldPrice: 55.00, tag: "HOT", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80" },
-            { id: 2, name: "Drip Client Non Root", price: 3.00, oldPrice: null, tag: "HOT", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" }
-        ];
-
-        let users = JSON.parse(localStorage.getItem('store_users')) || [
-            { id: 101, email: "samnang@gmail.com", phone: "012345678", balance: 5.00 }
-        ];
-
-        let discounts = JSON.parse(localStorage.getItem('store_discounts')) || [
-            { code: "NEWYEAR2026", discount: 2.00 }
-        ];
+        let services = JSON.parse(localStorage.getItem('store_products')) || [];
+        let users = JSON.parse(localStorage.getItem('store_users')) || [];
+        let discounts = JSON.parse(localStorage.getItem('store_discounts')) || [];
 
         window.onload = function() {
             renderServices();
@@ -137,7 +122,7 @@
             }
         }
 
-        // Services
+        // Services & Image Upload (FileReader)
         function renderServices() {
             const list = document.getElementById('adminServiceList');
             list.innerHTML = '';
@@ -160,21 +145,27 @@
         function addService() {
             const name = document.getElementById('serviceName').value;
             const price = parseFloat(document.getElementById('servicePrice').value);
-            const img = document.getElementById('serviceImg').value;
+            const fileInput = document.getElementById('serviceImgFile');
 
-            if (!name || isNaN(price) || !img) {
-                alert('សូមបំពេញឈ្មោះសេវាកម្ម តម្លៃ និង Link រូបភាពឱ្យបានครบถ้วน!');
+            if (!name || isNaN(price) || fileInput.files.length === 0) {
+                alert('សូមបំពេញឈ្មោះសេវាកម្ម តម្លៃ និងជ្រើសរើសរូបភាពពីក្នុងម៉ាស៊ីនឱ្យបានត្រឹមត្រូវ!');
                 return;
             }
 
-            services.push({ id: Date.now(), name: name, price: price, oldPrice: null, tag: "HOT", img: img });
-            localStorage.setItem('store_products', JSON.stringify(services));
-            
-            document.getElementById('serviceName').value = '';
-            document.getElementById('servicePrice').value = '';
-            document.getElementById('serviceImg').value = '';
-            renderServices();
-            alert('បានបន្ថែមសេវាកម្ម និងរូបភាពដោយជោគជ័យ!');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result; // แปลงรูปเป็น Base64
+                
+                services.push({ id: Date.now(), name: name, price: price, oldPrice: null, tag: "HOT", img: base64Image });
+                localStorage.setItem('store_products', JSON.stringify(services));
+                
+                document.getElementById('serviceName').value = '';
+                document.getElementById('servicePrice').value = '';
+                fileInput.value = '';
+                renderServices();
+                alert('បានបន្ថែមសេវាកម្ម និង Upload រូបភាពដោយជោគជ័យ!');
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
 
         function deleteService(index) {
@@ -213,7 +204,6 @@
 
             let user = users.find(u => u.email === emailInput || u.phone === emailInput);
             if (!user) {
-                // បើរកមិនឃើញ បង្កើតថ្មីស្វ័យប្រវត្តិ
                 user = { id: Date.now(), email: emailInput, phone: "N/A", balance: amount };
                 users.push(user);
             } else {
